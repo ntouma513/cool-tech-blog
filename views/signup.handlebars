@@ -1,0 +1,36 @@
+<h1>Sign Up</h1>
+<form id="signup-form">
+  <label for="name">Name:</label>
+  <input type="text" id="name" required>
+  <label for="email">Email:</label>
+  <input type="email" id="email" required>
+  <label for="password">Password:</label>
+  <input type="password" id="password" required>
+  <button type="submit">Sign Up</button>
+</form>
+
+<script>
+  document.getElementById('signup-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (name && email && password) {
+      const response = await fetch('/api/users/signup', {
+        method: 'POST',
+        body: JSON.stringify({ name, email, password }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.ok) {
+        document.location.replace('/');
+      } else {
+        alert('Failed to sign up.');
+      }
+    }
+  });
+</script>
+
+<script src="/js/signup.js"></script>

@@ -1,0 +1,47 @@
+<h1>{{post.title}}</h1>
+<p><small>By {{post.user.name}} on {{post.date_created}}</small></p>
+<p>{{post.content}}</p>
+
+<h2>Comments</h2>
+{{#if post.comments.length}}
+  {{#each post.comments}}
+    <div class="card">
+      <p><strong>{{user.name}}</strong>: {{content}}</p>
+      <p><small>Posted on {{date_created}}</small></p>
+    </div>
+  {{/each}}
+{{else}}
+  <p>No comments yet. Be the first to comment!</p>
+{{/if}}
+
+{{#if logged_in}}
+  <form id="comment-form">
+    <textarea id="comment-content" placeholder="Write a comment..." required></textarea>
+    <button type="submit">Submit</button>
+  </form>
+{{else}}
+  <p><a href="/login">Log in</a> to leave a comment.</p>
+{{/if}}
+
+<script>
+  document.getElementById('comment-form')?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const content = document.getElementById('comment-content').value.trim();
+    const postId = {{post.id}};
+
+    if (content) {
+      const response = await fetch('/api/comments', {
+        method: 'POST',
+        body: JSON.stringify({ content, post_id: postId }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.ok) {
+        document.location.reload();
+      } else {
+        alert('Failed to submit comment.');
+      }
+    }
+  });
+</script>

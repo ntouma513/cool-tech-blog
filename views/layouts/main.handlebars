@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Blog</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav>
+    <div>
+      <a href="/">Home</a>
+      {{#if logged_in}}
+        <a href="/dashboard">Dashboard</a>
+        <a href="/" id="logout">Logout</a>
+      {{else}}
+        <a href="/login">Login</a>
+        <a href="/signup">Sign Up</a>
+      {{/if}}
+    </div>
+  </nav>
+  <div class="container">
+    {{{body}}}
+  </div>
+  <script>
+    document.getElementById('logout')?.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const response = await fetch('/api/users/logout', {
+        method: 'POST',
+      });
+      if (response.ok) {
+        document.location.replace('/');
+      } else {
+        alert('Failed to log out.');
+      }
+    });
+  </script>
+</body>
+</html>

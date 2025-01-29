@@ -1,0 +1,12 @@
+[
+  {
+    "title": "My First Post",
+    "content": "This is the content of my first post.",
+    "user_id": 1
+  },
+  {
+    "title": "Another Post",
+    "content": "Here's some more content.",
+    "user_id": 2
+  }
+]
